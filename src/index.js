@@ -1,12 +1,12 @@
 import Sortable from 'sortablejs';
 
-window.Sortable = Sortable;
+window.Sortablee = Sortable;
 
 if (typeof window.Livewire === 'undefined') {
     throw 'Livewire Sortable.js Plugin: window.Livewire is undefined. Make sure @livewireScripts is placed above this script include';
 }
 
-window.Livewire.directive('sortable', (el, directive, component) => {
+window.Livewire.directive('sortablee', (el, directive, component) => {
     // Only fire this handler on the "root" directive.
     if (directive.modifiers.length > 0) {
         return;
@@ -14,24 +14,24 @@ window.Livewire.directive('sortable', (el, directive, component) => {
 
     let options = {};
 
-    if (el.hasAttribute('wire:sortable.options')) {
-        options = (new Function(`return ${el.getAttribute('wire:sortable.options')};`))();
+    if (el.hasAttribute('wire:sortablee.options')) {
+        options = (new Function(`return ${el.getAttribute('wire:sortablee.options')};`))();
     }
 
-    el.livewire_sortable = window.Sortable.create(el, {
+    el.livewire_sortablee = window.Sortablee.create(el, {
         ...options,
-        draggable: '[wire\\:sortable\\.item]',
-        handle: el.querySelector('[wire\\:sortable\\.handle]') ? '[wire\\:sortable\\.handle]' : null,
+        draggable: '[wire\\:sortablee\\.item]',
+        handle: el.querySelector('[wire\\:sortablee\\.handle]') ? '[wire\\:sortablee\\.handle]' : null,
         sort: true,
-        dataIdAttr: 'wire:sortable.item',
+        dataIdAttr: 'wire:sortablee.item',
         group: {
-            name: el.getAttribute('wire:sortable'),
+            name: el.getAttribute('wire:sortablee'),
             pull: false,
             put: false,
         },
         store: {
-            set: function (sortable) {
-                let items = sortable.toArray().map((value, index) => {
+            set: function (sortablee) {
+                let items = sortablee.toArray().map((value, index) => {
                     return {
                         order: index + 1,
                         value: value,
@@ -44,7 +44,7 @@ window.Livewire.directive('sortable', (el, directive, component) => {
     });
 });
 
-window.Livewire.directive('sortable-group', (el, directive, component) => {
+window.Livewire.directive('sortablee-group', (el, directive, component) => {
     // Only fire this handler on the "root" group directive.
     if (! directive.modifiers.includes('item-group')) {
         return;
@@ -52,29 +52,29 @@ window.Livewire.directive('sortable-group', (el, directive, component) => {
 
     let options = {};
 
-    if (el.hasAttribute('wire:sortable-group.options')) {
-        options = (new Function(`return ${el.getAttribute('wire:sortable-group.options')};`))();
+    if (el.hasAttribute('wire:sortablee-group.options')) {
+        options = (new Function(`return ${el.getAttribute('wire:sortablee-group.options')};`))();
     }
 
-    el.livewire_sortable = window.Sortable.create(el, {
+    el.livewire_sortablee = window.Sortablee.create(el, {
         ...options,
-        draggable: '[wire\\:sortable-group\\.item]',
-        handle: el.querySelector('[wire\\:sortable-group\\.handle]') ? '[wire\\:sortable-group\\.handle]' : null,
+        draggable: '[wire\\:sortablee-group\\.item]',
+        handle: el.querySelector('[wire\\:sortablee-group\\.handle]') ? '[wire\\:sortablee-group\\.handle]' : null,
         sort: true,
-        dataIdAttr: 'wire:sortable-group.item',
+        dataIdAttr: 'wire:sortablee-group.item',
         group: {
-            name: el.closest('[wire\\:sortable-group]').getAttribute('wire:sortable-group'),
+            name: el.closest('[wire\\:sortablee-group]').getAttribute('wire:sortablee-group'),
             pull: true,
             put: true,
         },
         onSort: () => {
-            let masterEl = el.closest('[wire\\:sortable-group]');
+            let masterEl = el.closest('[wire\\:sortablee-group]');
 
-            let groups = Array.from(masterEl.querySelectorAll('[wire\\:sortable-group\\.item-group]')).map((el, index) => {
+            let groups = Array.from(masterEl.querySelectorAll('[wire\\:sortablee-group\\.item-group]')).map((el, index) => {
                 return {
                     order: index + 1,
-                    value: el.getAttribute('wire:sortable-group.item-group'),
-                    items:  el.livewire_sortable.toArray().map((value, index) => {
+                    value: el.getAttribute('wire:sortablee-group.item-group'),
+                    items:  el.livewire_sortablee.toArray().map((value, index) => {
                         return {
                             order: index + 1,
                             value: value
@@ -83,7 +83,7 @@ window.Livewire.directive('sortable-group', (el, directive, component) => {
                 };
             });
 
-            component.call(masterEl.getAttribute('wire:sortable-group'), groups);
+            component.call(masterEl.getAttribute('wire:sortablee-group'), groups);
         },
     });
 });
